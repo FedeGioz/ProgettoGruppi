@@ -1,7 +1,17 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using ProgettoGruppi.Areas.Identity.Data;
+using ProgettoGruppi.Data;
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("ProgettoGruppiDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ProgettoGruppiDbContextConnection' not found.");
+
+builder.Services.AddDbContext<ProgettoGruppiDbContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ProgettoGruppiDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -23,5 +33,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
 
 app.Run();
