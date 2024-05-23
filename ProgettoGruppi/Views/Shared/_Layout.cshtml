@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - ProgettoGruppi</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProgettoGruppi.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -27,6 +28,9 @@
                         </li>
                     </ul>
                 </div>
+                <div class="nav-item-profile">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy"><img align="middle" src="https://static-00.iconduck.com/assets.00/profile-circle-icon-256x256-ewso45t8.png"></a>
+                </div>
             </div>
         </nav>
     </header>
@@ -38,7 +42,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - ProgettoGruppi - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - ITIS Lab - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
