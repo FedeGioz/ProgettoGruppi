@@ -1,0 +1,47 @@
+﻿@model ProgettoGruppi.Models.SegnalazioneModel
+
+@{
+    ViewData["Title"] = "Segnala";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (User.Identity.IsAuthenticated)
+{
+    var isTechnician = User.FindFirst("isTechnician")?.Value == "true";
+    if (!isTechnician)
+    {
+        <form asp-action="Segnala" method="post">
+            <div class="form-group">
+                <label asp-for="Problema" class="control-label"></label>
+                <input asp-for="Problema" class="form-control" />
+                <span asp-validation-for="Problema" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Luogo" class="control-label"></label>
+                <input asp-for="Luogo" class="form-control" />
+                <span asp-validation-for="Luogo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Priorita" class="control-label"></label>
+                <input asp-for="Priorita" class="form-control" />
+                <span asp-validation-for="Priorita" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+    }
+    else
+    {
+        <p>Not authorized</p>
+    }
+}
+else
+{
+    <p>Not authorized</p>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

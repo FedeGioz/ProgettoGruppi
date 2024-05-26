@@ -86,7 +86,14 @@ namespace ProgettoGruppi.Areas.Identity.Pages.Account
         }
 
         public async Task OnGetAsync(string returnUrl = null)
+
         {
+            if (_signInManager.IsSignedIn(User))
+            {
+                // User is already logged in, redirect to Segnala page
+                Response.Redirect("/Home/Segnala");
+            }
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -116,7 +123,7 @@ namespace ProgettoGruppi.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    return LocalRedirect("/Home/Segnala");
                 }
                 if (result.RequiresTwoFactor)
                 {

@@ -1,17 +1,31 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using ProgettoGruppi.Areas.Identity.Data;
 using ProgettoGruppi.Data;
+using ProgettoGruppi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ProgettoGruppiDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ProgettoGruppiDbContextConnection' not found.");
 
 builder.Services.AddDbContext<ProgettoGruppiDbContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ProgettoGruppiDbContext>();
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ProgettoGruppiDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
+
+builder.Services.Configure<DataProtectionTokenProviderOptions>(o =>
+       o.TokenLifespan = TimeSpan.FromHours(3));
+
+builder.Services.ConfigureApplicationCookie(o => {
+    o.ExpireTimeSpan = TimeSpan.FromDays(5);
+    o.SlidingExpiration = true;
+});
 
 var app = builder.Build();
 
@@ -19,7 +33,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -28,6 +41,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication(); // Ensure this line is present
 app.UseAuthorization();
 
 app.MapControllerRoute(

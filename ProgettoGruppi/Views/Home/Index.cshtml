@@ -20,7 +20,13 @@
 			di apprendimento sicuro ed efficiente.
 		</p>
 		<div class="centered">
-			<button class="bottone_segnala">Segnala un problema</button>
+			<button class="bottone_segnala" onclick="redirectToSegnala()">Segnala un problema</button>
+
+			<script>
+				function redirectToSegnala() {
+					window.location.href = "/Home/Segnala";
+				}
+			</script>
 		</div>
 	</section>
 </main>

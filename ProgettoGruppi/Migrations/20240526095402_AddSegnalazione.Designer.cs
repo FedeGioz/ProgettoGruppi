@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProgettoGruppi.Data;
 
 #nullable disable
 
-namespace ProgettoGruppi.Migrations
+namespace ProgettoGruppi.Migrations.ProgettoGruppiDb
 {
     [DbContext(typeof(ProgettoGruppiDbContext))]
-    partial class ProgettoGruppiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240526095402_AddSegnalazione")]
+    partial class AddSegnalazione
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
