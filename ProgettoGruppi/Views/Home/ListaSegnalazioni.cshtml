@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ProgettoGruppi.Models.Segnalazione>
+
+<h1>Lista Segnalazioni</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>User Id</th>
+            <th>Problema</th>
+            <th>Luogo</th>
+            <th>Priorita</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var segnalazione in Model)
+        {
+            <tr>
+                <td>@segnalazione.Id</td>
+                <td>@segnalazione.UserId</td>
+                <td>@segnalazione.Problema</td>
+                <td>@segnalazione.Luogo</td>
+                <td>@segnalazione.Priorita</td>
+            </tr>
+        }
+    </tbody>
+</table>

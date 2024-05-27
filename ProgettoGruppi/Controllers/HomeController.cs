@@ -4,6 +4,7 @@ using ProgettoGruppi.Areas.Identity.Data;
 using ProgettoGruppi.Data;
 using ProgettoGruppi.Models;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProgettoGruppi.Controllers
 {
@@ -79,6 +80,20 @@ namespace ProgettoGruppi.Controllers
             }
 
             return View(model);
+        }
+
+        public async Task<IActionResult> ListaSegnalazioni()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null || !user.isTechnician)
+            {
+                // Redirect to an appropriate page if the user is not a technician
+                return RedirectToAction("Index");
+            }
+
+            var segnalazioni = await _context.Segnalazioni.ToListAsync();
+            return View(segnalazioni);
         }
     }
 }
