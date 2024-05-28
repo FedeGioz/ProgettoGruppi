@@ -109,7 +109,7 @@ namespace ProgettoGruppi.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
 
-            if (user == null || !user.isTechnician)
+            if (user.isTechnician)
             {
                 return RedirectToAction("Index");
             }
@@ -119,6 +119,21 @@ namespace ProgettoGruppi.Controllers
                                             .ToListAsync();
 
             return View(segnalazioni);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteSegnalazione(int id)
+        {
+            var segnalazione = _context.Segnalazioni.Find(id);
+            if (segnalazione == null)
+            {
+                return NotFound();
+            }
+
+            _context.Segnalazioni.Remove(segnalazione);
+            _context.SaveChanges();
+
+            return RedirectToAction("ListaSegnalazioni"); // Redirect to the list view after deletion
         }
     }
 }

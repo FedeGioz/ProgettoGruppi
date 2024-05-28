@@ -1,15 +1,19 @@
 ﻿@model IEnumerable<ProgettoGruppi.Models.Segnalazione>
 
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
 <h1>Lista Segnalazioni</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>Id</th>
-            <th>User Id</th>
             <th>Problema</th>
             <th>Luogo</th>
             <th>Priorita</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -17,10 +21,17 @@
         {
             <tr>
                 <td>@segnalazione.Id</td>
-                <td>@segnalazione.UserId</td>
                 <td>@segnalazione.Problema</td>
                 <td>@segnalazione.Luogo</td>
                 <td>@segnalazione.Priorita</td>
+                <td>
+                    <form asp-action="DeleteSegnalazione" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@segnalazione.Id" />
+                        <button type="submit" class="btn btn-link" style="padding: 0; border: none; background: none;">
+                            <i class="fas fa-trash-alt" style="color: red;"></i>
+                        </button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
