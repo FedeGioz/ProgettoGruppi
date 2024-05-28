@@ -24,10 +24,20 @@ namespace ProgettoGruppi.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null && user.isTechnician)
+            {
+                return Redirect("Home/ListaSegnalazioni");
+            }
+            else if(user != null && !user.isTechnician)
+            {
+                return Redirect("Home/Segnala");
+            }
             return View();
         }
+
 
         public IActionResult Privacy()
         {
@@ -88,11 +98,26 @@ namespace ProgettoGruppi.Controllers
 
             if (user == null || !user.isTechnician)
             {
-                // Redirect to an appropriate page if the user is not a technician
                 return RedirectToAction("Index");
             }
 
             var segnalazioni = await _context.Segnalazioni.ToListAsync();
+            return View(segnalazioni);
+        }
+
+        public async Task<IActionResult> StoricoProblemi()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null || !user.isTechnician)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var segnalazioni = await _context.Segnalazioni
+                                            .Where(s => s.UserId == user.Id)
+                                            .ToListAsync();
+
             return View(segnalazioni);
         }
     }

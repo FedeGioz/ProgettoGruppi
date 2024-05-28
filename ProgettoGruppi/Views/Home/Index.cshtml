@@ -1,32 +1,43 @@
 ﻿@{
-	ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home Page";
+    var isTechnician = ViewData["IsTechnician"] as bool? ?? false;
 }
 
 <head>
-	<link rel="stylesheet" href="~/css/home.css">
+    <link rel="stylesheet" href="~/css/home.css">
 </head>
 <header>
-	<h1 class="titolo">ITIS Lab</h1>
+    <h1 class="titolo">ITIS Lab</h1>
 </header>
 <main>
-	<section class="intro">
-		<h2 class="sottotitolo">
-			Qui potrai segnalare i problemi riscontrati nei laboratori del
-			<a href="https://www.itiscuneo.edu.it/" target=”_blank”>nostro istituto</a>!
-		</h2>
-		<p>
-			Il nostro sistema ti permette di segnalare guasti, malfunzionamenti o
-			anomalie nei laboratori della scuola. Aiutaci a mantenere un ambiente
-			di apprendimento sicuro ed efficiente.
-		</p>
-		<div class="centered">
-			<button class="bottone_segnala" onclick="redirectToSegnala()">Segnala un problema</button>
+    <section class="intro">
+        <h2 class="sottotitolo">
+            Qui potrai segnalare i problemi riscontrati nei laboratori del
+            <a href="https://www.itiscuneo.edu.it/" target="_blank">nostro istituto</a>!
+        </h2>
+        <p>
+            Il nostro sistema ti permette di segnalare guasti, malfunzionamenti o
+            anomalie nei laboratori della scuola. Aiutaci a mantenere un ambiente
+            di apprendimento sicuro ed efficiente.
+        </p>
 
-			<script>
-				function redirectToSegnala() {
-					window.location.href = "/Home/Segnala";
-				}
-			</script>
-		</div>
-	</section>
+        @if (isTechnician)
+        {
+            <button class="admin_button" onclick="redirectToAdmin()">Visualizza Problemi</button>
+        }
+        else
+        {
+            <button class="bottone_segnala" onclick="redirectToSegnala()">Segnala un problema</button>
+        }
+    </section>
 </main>
+
+<script>
+    function redirectToSegnala() {
+        window.location.href = "/Home/Segnala";
+    }
+
+    function redirectToAdmin() {
+        window.location.href = "/Home/ListaSegnalazioni";
+    }
+</script>
